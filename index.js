@@ -13,9 +13,12 @@ var client = new Twitter({
 //Streaming API
 var stream = client.stream('statuses/filter', {follow:27426152});
 stream.on('data', function(event) {
-    console.log(event);
-    if(event.text.indexOf('javacsript') > -1) {
-        console.log(event);
+    var regEx = /javacsript|jaavscript/gi;
+    var match = event.text.match(regEx);
+    console.log(match);
+    console.log(event.text);
+    if(match !== null) {
+        console.log(event.text);
         client.post('statuses/update',
             {status: '@nigeljohnwade Sorry, *javascript*', in_reply_to_status_id: event.id},
             function (err, tweet) {
